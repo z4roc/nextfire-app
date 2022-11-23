@@ -1,14 +1,14 @@
-// Import the functions you need from the SDKs you need
+
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/firestore'
+import 'firebase/compat/auth'
+
 const firebaseConfig = {
   apiKey: "AIzaSyCAAx-lUNDGCp1BjCxgfE9eqf9DyCyoJxQ",
   authDomain: "nextfire-course-e15dc.firebaseapp.com",
@@ -19,12 +19,12 @@ const firebaseConfig = {
   measurementId: "G-YMR468WVDL"
 };
 
-// Initialize Firebase
-
-
 const app = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
+export const firebaseold = firebase;
 export const auth = getAuth(app);
 export const googleAuth = new GoogleAuthProvider();
 export const firestore = getFirestore(app);
 export const storage = getStorage(app);
+
