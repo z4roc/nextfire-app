@@ -3,6 +3,7 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import {
   collection,
   DocumentSnapshot,
+  increment,
   getDoc,
   getDocs,
   getFirestore,
@@ -10,7 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { getStorage, TaskEvent } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 
 import firebase from "firebase/compat/app";
@@ -43,6 +44,8 @@ export const googleAuth = new GoogleAuthProvider();
 export const firestore = getFirestore(app);
 export const storage = getStorage(app);
 
+export const STATE_CHANGED = "state_changed";
+
 export async function getUserWithUsername(username: string) {
   const q = query(
     collection(firestore, "users"),
@@ -57,6 +60,6 @@ export function postToJson(doc: DocumentSnapshot) {
   return {
     ...data,
     createdAt: data.createdAt.toMillis(),
-    updatedAt: data.updatedAt.toMillis()
-  }
+    updatedAt: data.updatedAt.toMillis(),
+  };
 }

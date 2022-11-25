@@ -1,4 +1,4 @@
-import { doc, DocumentData, DocumentReference, onSnapshot, Query, QueryDocumentSnapshot, QuerySnapshot } from "firebase/firestore";
+import { doc, DocumentData, DocumentReference, getDoc, onSnapshot, Query, QueryDocumentSnapshot, QuerySnapshot } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, firestore } from "./firebase";
@@ -63,4 +63,18 @@ export function useCollection(ref: Query): (QuerySnapshot<DocumentData> | null)[
       });
   }, [colRef]);
   return [_col];
+}
+
+export function useDocumentDataOnce(ref: DocumentReference): (DocumentData | null)[] {
+  const [_doc, setDoc] = useState<DocumentData | null>(null);
+
+  const docRef = useRef(ref);
+
+  useEffect(() => {
+      getDoc(docRef.current).then(snap => {
+          setDoc(snap.exists() ? snap.data() : null);
+      });
+      return;
+  }, [docRef]);
+  return [_doc];
 }
